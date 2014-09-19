@@ -11,11 +11,11 @@ import okkapel.kkplglutil.rendering.RenderBufferGenerator;
 import okkapel.kkplglutil.util.KeyBind;
 import okkapel.kkplglutil.util.KeyBindHandler;
 import celestibytes.ctie.core.Game;
+import celestibytes.ctie.d2.World;
 import celestibytes.ctie.entity.EntityPlayer;
 import celestibytes.ctie.input.BasicGameInput;
 import celestibytes.ctie.util.Direction;
 import celestibytes.ctie.util.TextureLoader;
-import celestibytes.ctiplatformerrpg.world.World;
 
 public class CTIPlatformer extends Game {
 	
@@ -79,6 +79,11 @@ public class CTIPlatformer extends Game {
 			public void onKeyPushedDown() {}
 			public void onKeyHeldDown() {BasicGameInput.setPlayerMovingY(Direction.DOWN);}
 		});
+		KeyBindHandler.addKeyBind(new KeyBind(false, Keyboard.KEY_SPACE) {
+			public void onKeyUp() {}
+			public void onKeyPushedDown() {testPlr.setMotionY(-600f);;}
+			public void onKeyHeldDown() {}
+		});
 		
 		testWorld = new World();
 	}
@@ -98,7 +103,7 @@ public class CTIPlatformer extends Game {
 		
 //		System.out.println(BasicGameInput.getPlayerMovingX().name() + " " + BasicGameInput.getPlayerMovingY().name());
 		
-		glTranslatef(testPlr.getX(), testPlr.getY(), 0f);
+		glTranslatef(-testPlr.getX(), -testPlr.getY(), 0f);
 		
 		testWorld.renderWorld();
 //		GLHandler.renderRendPtr(plrRender);
