@@ -15,6 +15,7 @@ import celestibytes.ctie.entity.EntityPlayer;
 import celestibytes.ctie.input.BasicGameInput;
 import celestibytes.ctie.util.Direction;
 import celestibytes.ctie.util.TextureLoader;
+import celestibytes.ctiplatformerrpg.world.World;
 
 public class CTIPlatformer extends Game {
 	
@@ -25,6 +26,8 @@ public class CTIPlatformer extends Game {
 	private EntityPlayer testPlr;
 	
 	private GLRenderObjPointer plrRender;
+	
+	private World testWorld;
 	
 	public static void main(String[] args) {
 		theGame = new CTIPlatformer();
@@ -76,6 +79,8 @@ public class CTIPlatformer extends Game {
 			public void onKeyPushedDown() {}
 			public void onKeyHeldDown() {BasicGameInput.setPlayerMovingY(Direction.DOWN);}
 		});
+		
+		testWorld = new World();
 	}
 
 	@Override
@@ -95,7 +100,8 @@ public class CTIPlatformer extends Game {
 		
 		glTranslatef(testPlr.getX(), testPlr.getY(), 0f);
 		
-		GLHandler.renderRendPtr(plrRender);
+		testWorld.renderWorld();
+//		GLHandler.renderRendPtr(plrRender);
 	}
 	
 }
