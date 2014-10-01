@@ -25,3 +25,6 @@ bin
 /out
 /atlassian-ide-plugin.xml
 /repo/
+
+# Misc
+*.dat
