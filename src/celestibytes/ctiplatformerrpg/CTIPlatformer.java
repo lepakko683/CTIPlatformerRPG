@@ -13,6 +13,7 @@ import okkapel.kkplglutil.rendering.GLRenderObjPointer;
 import okkapel.kkplglutil.rendering.RenderBufferGenerator;
 import okkapel.kkplglutil.rendering.font.FontFileSource;
 import okkapel.kkplglutil.rendering.font.FontRenderer;
+import okkapel.kkplglutil.util.Colour;
 import okkapel.kkplglutil.util.KeyBind;
 import okkapel.kkplglutil.util.KeyBindHandler;
 import okkapel.kkplglutil.util.TextureLoader;
@@ -33,6 +34,7 @@ public class CTIPlatformer extends Game {
 	private EntityPlayer testPlr;
 	
 	private GLRenderObjPointer plrRender;
+	private GLRenderObjPointer rtxtp;
 	
 	private World testWorld;
 	
@@ -58,8 +60,8 @@ public class CTIPlatformer extends Game {
 
 	@Override
 	protected void init() {
-		GLHandler.init();
-		FontRenderer.init(new File("res/textures/font/font.png"), new File("testData.dat"));
+		GLHandler.init(); // move to engine?
+		FontRenderer.init(new File("res/textures/font/font.png"), new File("testData.dat")); // move to engine?
 		testPlr = new EntityPlayer();
 		
 		RenderBufferGenerator rbg = RenderBufferGenerator.INSTANCE;
@@ -71,6 +73,7 @@ public class CTIPlatformer extends Game {
 		rbg.addVertexWColorWUV(20f, -20f, 0f, 1f, 0f, 1f, 1f, 0f, 0f);
 		rbg.addVertexWColorWUV(-20f, -20f, 0f, 1f, 0f, 1f, 1f, 0f, 0f);
 		plrRender = GLHandler.createROBJ(rbg.createBuffer(), GL15.GL_DYNAMIC_DRAW, null, 6, GLRenderMethod.VERTEX_BUFFER_OBJECT);
+		rtxtp = FontRenderer.createTextRobj(50f, 50f, 20f, "HELLO WORLD".toCharArray(), Colour.GREEN);
 		
 		KeyBindHandler.addKeyBind(new KeyBind(false, Keyboard.KEY_A) {
 			public void onKeyUp() {}
@@ -126,7 +129,13 @@ public class CTIPlatformer extends Game {
 		
 		glLoadIdentity();
 		
-		FontRenderer.renderStr("@PIZZANA; @LE683".toCharArray(), 0f, 0f);
+//		FontRenderer.renderStr("@PIZZANA; @LE683".toCharArray(), 0f, 0f);
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		GLHandler.renderRendPtr(rtxtp);
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
 		
 //		plrRender.setVertPositions(testPlr.getX(), testPlr.getY(), 0, 6);
 		plrRender.setVertPositionsSquare(-testPlr.getX()*World.tilesize, -testPlr.getY()*World.tilesize, 40f, 40f, 0, 6);
